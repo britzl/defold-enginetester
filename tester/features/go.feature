@@ -114,13 +114,19 @@ Feature: go
 		When I set game object go:/go1 position to 400,500,0
 		Then game object go:/go1 should be at position 400,500,0
 
-
 	@position
 	Scenario: World position
 		When I set game object go:/go1 position to 400,500,0
 		And I set game object go:/child1 position to 100,200,0
 		Then game object go:/go1 should be at world position 400,500,0
 		And game object go:/child1 should be at world position 500,700,0
+
+	@position
+	Scenario: World rotation
+		When I set game object go:/go1 rotation to 10,20,30 degrees
+		And I set game object go:/child1 rotation to 20,30,40 degrees
+		Then game object go:/go1 should be world rotated 10,20,30 degrees
+		And game object go:/child1 should be world rotated 30,50,70 degrees
 
 	@rotation
 	Scenario: Setting and getting rotation
@@ -146,3 +152,17 @@ Feature: go
 	Scenario: Setting uniform scale and getting non-uniform scale
 		When I set game object go:/go1 scale to 3
 		Then game object go:/go1 should be scaled to 3,3,3
+
+	@scale
+	Scenario: Setting and getting uniform world scale
+		When I set game object go:/go1 scale to 3
+		And I set game object go:/child1 scale to 2
+		Then game object go:/go1 should be world scaled to 3
+		And game object go:/child1 should be world scaled to 6
+
+	@scale
+	Scenario: Setting and getting non-uniform world scale
+		When I set game object go:/go1 scale to 3,4,5
+		And I set game object go:/child1 scale to 2,3,4
+		Then game object go:/go1 should be world scaled to 3,4,5
+		And game object go:/child1 should be world scaled to 6,12,20
