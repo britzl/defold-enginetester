@@ -1,0 +1,26 @@
+[project]
+title = Defold Engine Tester
+dependencies = https://github.com/britzl/cucumber-defold/archive/master.zip
+
+[bootstrap]
+main_collection = /tester/tester.collectionc
+
+[input]
+game_binding = /input/game.input_bindingc
+
+[display]
+width = 640
+height = 1136
+
+[script]
+shared_state = 1
+
+[ios]
+bundle_identifier = com.defold.enginetester
+
+[osx]
+bundle_identifier = com.defold.enginetester
+
+[android]
+package = com.defold.enginetester
+
