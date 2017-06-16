@@ -36,6 +36,13 @@ function M.seconds(seconds)
 	end)
 end
 
+
+function M.one_frame()
+	M.until_true(function(dt)
+		return true
+	end)
+end
+
 function M.load_proxy(url)
 	url = msg.url(url)
 	msg.post(url, "load")
