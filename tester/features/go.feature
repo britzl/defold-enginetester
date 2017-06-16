@@ -169,16 +169,16 @@ Feature: go
 
 	@parent
 	Scenario: Setting parent of game object
-		Given the game object go:/go1 is positioned at 400,500,0
+		Given the game object go:/go1 is positioned at 400,500,10
 		And the game object go:/go2 is positioned at 10,20,1
 		When I set the game object go1 as parent of game object go:/go2
 		Then the game object go:/go2 should be positioned at 10,20,1
-		And the game object go:/go2 should be world positioned at 10,20,1
+		And the game object go:/go2 should be world positioned at 410,520,11
 
 	@parent
 	Scenario: Setting parent of game object while keeping world transform
 		Given the game object go:/go1 is positioned at 400,500,10
 		And the game object go:/go2 is positioned at 10,20,1
 		When I set the game object go1 as parent of game object go:/go2 and keep the world transform
-		Then the game object go:/go2 should be positioned at 10,20,1
-		And the game object go:/go2 should be world positioned at -390,-480,-9
+		Then the game object go:/go2 should be positioned at -390,-480,-9
+		And the game object go:/go2 should be world positioned at 10,20,1

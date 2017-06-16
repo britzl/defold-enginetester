@@ -33,12 +33,12 @@ Given("I check for errors", function()
 	end)--]]
 end)
 
-When("I wait (%d) seconds", function(seconds)
+When("I wait (%d*) seconds", function(seconds)
 	wait.seconds(tonumber(seconds))
 end)
 
-When("I wait (%d) second$", function(seconds)
-	wait.seconds(tonumber(seconds))
+When("I wait 1 second$", function()
+	wait.seconds(1)
 end)
 
 Then("an error should have happened", function()
