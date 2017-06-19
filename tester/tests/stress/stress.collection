@@ -1,12 +1,31 @@
-name: "tests"
+name: "stress"
+instances {
+  id: "cucumber"
+  prototype: "/tester/cucumber.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
-  id: "proxies"
+  id: "go"
   data: "embedded_components {\n"
-  "  id: \"go\"\n"
-  "  type: \"collectionproxy\"\n"
-  "  data: \"collection: \\\"/tester/tests/go/go.collection\\\"\\n"
-  "exclude: false\\n"
+  "  id: \"spritefactory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/tester/tests/stress/gowithsprite.go\\\"\\n"
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -21,10 +40,9 @@ embedded_instances {
   "  }\n"
   "}\n"
   "embedded_components {\n"
-  "  id: \"factory\"\n"
-  "  type: \"collectionproxy\"\n"
-  "  data: \"collection: \\\"/tester/tests/factory/factory.collection\\\"\\n"
-  "exclude: false\\n"
+  "  id: \"spinefactory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/tester/tests/stress/gowithspine.go\\\"\\n"
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -39,10 +57,9 @@ embedded_instances {
   "  }\n"
   "}\n"
   "embedded_components {\n"
-  "  id: \"stress\"\n"
-  "  type: \"collectionproxy\"\n"
-  "  data: \"collection: \\\"/tester/tests/stress/stress.collection\\\"\\n"
-  "exclude: false\\n"
+  "  id: \"particlefxfactory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/tester/tests/stress/gowithparticlefx.go\\\"\\n"
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"

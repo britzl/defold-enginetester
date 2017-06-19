@@ -118,7 +118,7 @@ Feature: go
 		And game object go:/go1 should be rotated 0,0,45 degrees
 
 	Scenario: Delete game object
-		Given I check for errors
+		Given error checking is enabled
 		When I delete game object go:/go1
 		And I animate game object go:/go1 position to 100,200,0 in 0.5 seconds
 		Then an error should have happened

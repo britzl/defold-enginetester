@@ -1,5 +1,6 @@
 local wire_server = require "cucumber.wire_server"
 local wait = require "tester.utils.wait"
+local metrics = require "tester.utils.metrics"
 require "tester.features.step_definitions.steps"
 
 Before(function()
@@ -22,6 +23,7 @@ end
 function update(self, dt)
 	self.wire_server.update()
 	wait.update(dt)
+	metrics.update(dt)
 end
 
 function on_message(self, message_id, message, sender)

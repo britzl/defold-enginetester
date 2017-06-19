@@ -24,3 +24,18 @@ bundle_identifier = com.defold.enginetester
 [android]
 package = com.defold.enginetester
 
+[collection]
+max_instances = 5000
+
+[sprite]
+max_count = 10000
+
+[spine]
+max_count = 1000
+
+[rig]
+max_instance_count = 1000
+
+[particle_fx]
+max_count = 200
+

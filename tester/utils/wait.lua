@@ -3,27 +3,58 @@ local M = {}
 
 local instances = {}
 
---- Wait until a function returns true when called
--- @param fn
-function M.until_true(fn)
+local sequence_count = 0
+
+
+local function create_instance()
 	local co = coroutine.running()
 	assert(co, "You must call this function from within a coroutine")
-	table.insert(instances, { co = co, update = true })
-	local dt = 0
-	while not fn(dt) do
-		dt = coroutine.yield()
+	sequence_count = sequence_count + 1
+
+	local instance = {
+		id = sequence_count,
+		co = co,
+	}
+	table.insert(instances, instance)	
+	return instance
+end
+
+
+local function remove_instance(instance)
+	for k,v in pairs(instances) do
+		if v.id == instance.id then
+			instances[k] = nil
+			return
+		end
 	end
 end
 
 
+--- Wait until a function returns true when called
+-- @param fn
+function M.until_true(fn)
+	local instance = create_instance()
+	instance.update = true
+	
+	local dt = 0
+	while not fn(dt) do
+		dt = coroutine.yield()
+	end
+	
+	remove_instance(instance)
+end
+
+
 function M.until_message(fn)
-	local co = coroutine.running()
-	assert(co, "You must call this function from within a coroutine")
-	table.insert(instances, { co = co, message = true })
+	local instance = create_instance()
+	instance.message = true
+	
 	local message_id, message, sender
 	while not fn(message_id, message, sender) do
 		message_id, message, sender = coroutine.yield()
 	end
+
+	remove_instance(instance)
 end
 
 --- Wait until a certain number of seconds have elapsed
@@ -42,6 +73,7 @@ function M.one_frame()
 		return true
 	end)
 end
+
 
 function M.load_proxy(url)
 	url = msg.url(url)
@@ -85,21 +117,29 @@ function M.animate(url, property, playback, to, easing, duration, delay)
 end
 
 function M.update(dt)
-	for k,v in pairs(instances) do
-		if coroutine.status(v.co) == "dead" then
-			instances[k] = nil
-		elseif v.update then
-			coroutine.resume(v.co, dt)
+	for i=#instances,1,-1 do
+		local instance = instances[i]
+		if coroutine.status(instance.co) == "dead" then
+			instances[i] = nil
+		else
+			if instance.update then
+				coroutine.resume(instance.co, dt)
+			end
+			return
 		end
 	end
 end
 
 function M.on_message(message_id, message, sender)
-	for k,v in pairs(instances) do
-		if coroutine.status(v.co) == "dead" then
-			instances[k] = nil
-		elseif v.message then
-			coroutine.resume(v.co, message_id, message, sender)
+	for i=#instances,1,-1 do
+		local instance = instances[i]
+		if coroutine.status(instance.co) == "dead" then
+			instances[i] = nil
+		else
+			if instance.message then
+				coroutine.resume(instance.co, message_id, message, sender)
+			end
+			return
 		end
 	end
 end
