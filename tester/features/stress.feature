@@ -35,3 +35,29 @@ Feature: Engine stress test
 		Then fps metrics should not deteriorate over time
 		And cpu metrics should not deteriorate over time
 		And mem metrics should not deteriorate over time
+
+
+	@stress
+	@gui
+	@font
+	Scenario: Spawn and delete many game objects with gui components
+		Given fps metrics is collected with a 1 second interval
+		And cpu metrics is collected with a 1 second interval
+		And mem metrics is collected with a 1 second interval
+		When I run a stress test with 50 instances using factory stress:/go#guifactory for 25 seconds
+		Then fps metrics should not deteriorate over time
+		And cpu metrics should not deteriorate over time
+		And mem metrics should not deteriorate over time
+
+
+	@stress
+	@label
+	@font
+	Scenario: Spawn and delete many game objects with label components
+		Given fps metrics is collected with a 1 second interval
+		And cpu metrics is collected with a 1 second interval
+		And mem metrics is collected with a 1 second interval
+		When I run a stress test with 50 instances using factory stress:/go#labelfactory for 25 seconds
+		Then fps metrics should not deteriorate over time
+		And cpu metrics should not deteriorate over time
+		And mem metrics should not deteriorate over time

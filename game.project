@@ -39,3 +39,9 @@ max_instance_count = 1000
 [particle_fx]
 max_count = 200
 
+[gui]
+max_count = 150
+
+[label]
+max_count = 150
+
