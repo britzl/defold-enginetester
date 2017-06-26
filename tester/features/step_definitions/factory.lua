@@ -1,3 +1,4 @@
+require "cucumber.cucumber"
 local wait = require "tester.utils.wait"
 
 local function to_quat(x, y, z)

@@ -3,35 +3,9 @@ go.property("prop_number", 123)
 go.property("prop_v3", vmath.vector3(1, 2, 3))
 go.property("prop_v4", vmath.vector4(1, 2, 3, 4))
 go.property("prop_url", msg.url())
-go.property("prop_quat", vmath.quat_rotation_z(math.rad(45)))
+go.property("prop_quat", vmath.quat())
 
 
 function init(self)
-	-- Add initialization code here
-	-- Remove this function if not needed
-end
-
-function final(self)
-	-- Add finalization code here
-	-- Remove this function if not needed
-end
-
-function update(self, dt)
-	-- Add update code here
-	-- Remove this function if not needed
-end
-
-function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Remove this function if not needed
-end
-
-function on_input(self, action_id, action)
-	-- Add input-handling code here
-	-- Remove this function if not needed
-end
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Remove this function if not needed
+	self.prop_quat = vmath.quat_rotation_z(math.rad(45))
 end

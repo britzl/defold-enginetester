@@ -1,6 +1,7 @@
 local wire_server = require "cucumber.wire_server"
 local wait = require "tester.utils.wait"
 local metrics = require "tester.utils.metrics"
+require "cucumber.cucumber"
 require "tester.features.step_definitions.steps"
 
 Before(function()
