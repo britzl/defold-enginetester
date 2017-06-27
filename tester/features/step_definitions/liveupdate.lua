@@ -7,7 +7,7 @@ Then("collection proxy (.*) should have (%d*) missing resources", function(proxy
 	assert(#resources == tonumber(count), ("Expected %d missing resources for %s but got %d"):format(tonumber(count), proxy_url, #resources))
 end)
 
-When("I download and store missing resources for collection proxy (.*) from (.*)", function(proxy_url, download_url)
+When("I download missing resources for collection proxy (.*) from (.*)", function(proxy_url, download_url)
 	wait.switch_context(proxy_url)
 	local resources = collectionproxy.missing_resources(proxy_url)
 	local manifest = resource.get_current_manifest()
