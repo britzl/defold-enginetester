@@ -24,6 +24,10 @@ Given("the (.*) collection is loaded", function(proxy_url)
 	wait.load_proxy(proxy_url)
 end)
 
+Given("the (.*) collection is unloaded", function(proxy_url)
+	wait.unload_proxy(proxy_url)
+end)
+
 Given("error checking is enabled", function()
 	pcall = function(f, ...)
 		local success, err = _pcall(f, ...)
