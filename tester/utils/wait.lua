@@ -31,27 +31,38 @@ end
 
 
 --- Wait until a function returns true when called
--- @param fn
-function M.until_true(fn)
+-- @param fn Function that must return true, will receive dt as its only argument
+-- @param timeout Optional timeout in seconds
+function M.until_true(fn, timeout)
 	local instance = create_instance()
 	instance.update = true
 	
+	local timestamp = socket.gettime()
 	local dt = 0
 	while not fn(dt) do
 		dt = coroutine.yield()
+		if timeout and (timestamp + timeout) >= socket.gettime() then
+			break
+		end
 	end
 	
 	remove_instance(instance)
 end
 
-
-function M.until_message(fn)
+--- Wait until a message is received
+-- @param fn Function that will receive message and return true if message is the correct one
+-- @param timeout Optional timeout in seconds
+function M.until_message(fn, timeout)
 	local instance = create_instance()
 	instance.message = true
 	
+	local timestamp = socket.gettime()
 	local message_id, message, sender
 	while not fn(message_id, message, sender) do
 		message_id, message, sender = coroutine.yield()
+		if timeout and (timestamp + timeout) >= socket.gettime() then
+			break
+		end
 	end
 
 	remove_instance(instance)
@@ -67,7 +78,7 @@ function M.seconds(seconds)
 	end)
 end
 
-
+--- Wait a single frame
 function M.one_frame()
 	M.until_true(function(dt)
 		return true
