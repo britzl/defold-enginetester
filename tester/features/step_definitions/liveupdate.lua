@@ -1,5 +1,5 @@
 require "cucumber.cucumber"
-local wait = require "tester.utils.wait"
+local wait = require "cucumber.automation.wait"
 
 Then("collection proxy (.*) should have (%d*) missing resources", function(proxy_url, count)
 	wait.switch_context(proxy_url)

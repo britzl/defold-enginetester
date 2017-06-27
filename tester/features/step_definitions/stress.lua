@@ -1,5 +1,5 @@
 require "cucumber.cucumber"
-local wait = require "tester.utils.wait"
+local wait = require "cucumber.automation.wait"
 
 
 
@@ -7,7 +7,6 @@ local function random_pos()
 	local x = math.random(640)
 	local y = math.random(1136)
 	return vmath.vector3(x, y, 0)
-	
 end
 
 

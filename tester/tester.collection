@@ -1,10 +1,30 @@
 name: "tester"
+collection_instances {
+  id: "cucumber"
+  collection: "/cucumber/cucumber.collection"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "tester"
   data: "components {\n"
-  "  id: \"script\"\n"
-  "  component: \"/tester/tester.script\"\n"
+  "  id: \"steps\"\n"
+  "  component: \"/tester/features/step_definitions/steps.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -17,12 +37,9 @@ embedded_instances {
   "    w: 1.0\n"
   "  }\n"
   "}\n"
-  "embedded_components {\n"
-  "  id: \"testsproxy\"\n"
-  "  type: \"collectionproxy\"\n"
-  "  data: \"collection: \\\"/tester/tests/tests.collection\\\"\\n"
-  "exclude: false\\n"
-  "\"\n"
+  "components {\n"
+  "  id: \"metrics\"\n"
+  "  component: \"/tester/utils/metrics.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"

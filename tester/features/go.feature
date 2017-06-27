@@ -148,12 +148,13 @@ Feature: go
 		Then game object go:/go1 should be world positioned at 400,500,0
 		And game object go:/child1 should be world positioned at 500,700,0
 
-	@position
+	@foo
+	@rotation
 	Scenario: World rotation
-		When I set game object go:/go1 rotation to 10,20,30 degrees
+		When I set game object go:/go1 rotation to 10,20,0 degrees
 		And I set game object go:/child1 rotation to 20,30,40 degrees
-		Then game object go:/go1 should be world rotated 10,20,30 degrees
-		And game object go:/child1 should be world rotated 30,50,70 degrees
+		Then game object go:/go1 should be world rotated 10,20,0 degrees
+		And game object go:/child1 should be world rotated 30,50,40 degrees
 
 	@rotation
 	Scenario: Setting and getting rotation

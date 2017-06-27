@@ -1,0 +1,5 @@
+local metrics = require "tester.utils.metrics"
+
+function update(self, dt)
+	metrics.update(dt)
+end

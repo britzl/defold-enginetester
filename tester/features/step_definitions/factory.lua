@@ -1,5 +1,5 @@
 require "cucumber.cucumber"
-local wait = require "tester.utils.wait"
+local wait = require "cucumber.automation.wait"
 
 local function to_quat(x, y, z)
 	local qx = vmath.quat_rotation_x(math.rad(tonumber(x)))

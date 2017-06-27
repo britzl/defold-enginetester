@@ -1,14 +1,53 @@
 require "cucumber.cucumber"
-local wait = require "tester.utils.wait"
+local wait = require "cucumber.automation.wait"
 
 local function to_quat(x, y, z)
+	--[[local c1 = math.cos(math.rad(tonumber(x) / 2))
+	local c2 = math.cos(math.rad(tonumber(y) / 2))
+	local c3 = math.cos(math.rad(tonumber(z) / 2))
+	local s1 = math.sin(math.rad(tonumber(x) / 2))
+	local s2 = math.sin(math.rad(tonumber(y) / 2))
+	local s3 = math.sin(math.rad(tonumber(z) / 2))
+	local qxyz = vmath.quat(
+		s1 * c2 * c3 + c1 * s2 * s3,
+		c1 * s2 * c3 - s1 * c2 * s3,
+		c1 * c2 * s3 + s1 * s2 * c3,
+		c1 * c2 * c3 - s1 * s2 * s3
+	)--]]
+
 	local qx = vmath.quat_rotation_x(math.rad(tonumber(x)))
 	local qy = vmath.quat_rotation_y(math.rad(tonumber(y)))
 	local qz = vmath.quat_rotation_z(math.rad(tonumber(z)))
+
 	return qx*qy*qz
 end
 
+--[[
+vmath.quat(0.42629241943359, 0.19984886050224, 0.59172397851944, 0.65436834096909)
+vmath.quat(0.34752306342125, 0.31797593832016, 0.57059419155121, 0.67271196842194)
+ } else if ( order === 'XZY' ) {
 
+	 this.x = s1 * c2 * c3 - c1 * s2 * s3;
+	 this.y = c1 * s2 * c3 - s1 * c2 * s3;
+	 this.z = c1 * c2 * s3 + s1 * s2 * c3;
+	 this.w = c1 * c2 * c3 + s1 * s2 * s3;
+
+ }
+
+ return this;
+
+]]
+--vmath.quat(0.95154851675034, 0.23929834365845, 0.18930785357952, 0.038134574890137)
+--vmath.quat(0.12767943739891, 0.14487813413143, 0.26853582262993, 0.94371432065964)
+
+
+local function compare_quats(q1, q2)
+	if math.abs(q1.x - q2.x) >= 0.00000006 then return false end
+	if math.abs(q1.y - q2.y) >= 0.00000006 then return false end
+	if math.abs(q1.z - q2.z) >= 0.00000006 then return false end
+	if math.abs(q1.w - q2.w) >= 0.00000006 then return false end
+	return true
+end
 
 Given("game object (.*) is positioned at (.*),(.*),(.*)", function(url, x, y, z)
 	wait.switch_context(url)
@@ -139,13 +178,13 @@ Then("game object (.*) should be rotated (.*),(.*),(.*) degrees", function (url,
 	wait.switch_context(url)
 	local expected = to_quat(x, y, z)
 	local actual = go.get_rotation(url)
-	assert(actual == expected, ("Expected rotation %s but got %s"):format(tostring(expected), tostring(actual)))
+	assert(compare_quats(actual, expected), ("Expected rotation %s but got %s"):format(tostring(expected), tostring(actual)))
 end)
 Then("game object (.*) should be world rotated (.*),(.*),(.*) degrees", function (url, x, y, z)
 	wait.switch_context(url)
 	local expected = to_quat(x, y, z)
 	local actual = go.get_world_rotation(url)
-	assert(actual == expected, ("Expected world rotation %s but got %s"):format(tostring(expected), tostring(actual)))
+	assert(compare_quats(actual, expected), ("Expected world rotation %s but got %s"):format(tostring(expected), tostring(actual)))
 end)
 Then("game object (.*) should have the (.*) property set to hash (.*)", function(url, property, value)
 	wait.switch_context(url)

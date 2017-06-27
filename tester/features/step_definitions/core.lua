@@ -1,5 +1,5 @@
 require "cucumber.cucumber"
-local wait = require "tester.utils.wait"
+local wait = require "cucumber.automation.wait"
 local metrics = require "tester.utils.metrics"
 
 
@@ -57,8 +57,6 @@ local function compare_first_last_sample(samples)
 	local first = samples[1]
 	local last = samples[#samples]
 	local diff = first - last
-	--pprint(samples)
-	--print("first", first, "last", last, "diff", diff, "first*0.1", first * 0.1)
 	return diff <= first * 0.1, diff
 end
 
