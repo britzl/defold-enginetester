@@ -15,7 +15,7 @@ local function create_instance()
 		id = sequence_count,
 		co = co,
 	}
-	table.insert(instances, instance)	
+	table.insert(instances, instance)
 	return instance
 end
 
@@ -36,16 +36,16 @@ end
 function M.until_true(fn, timeout)
 	local instance = create_instance()
 	instance.update = true
-	
+
 	local timestamp = socket.gettime()
 	local dt = 0
 	while not fn(dt) do
 		dt = coroutine.yield()
-		if timeout and (timestamp + timeout) >= socket.gettime() then
+		if timeout and socket.gettime() >= (timestamp + timeout)  then
 			break
 		end
 	end
-	
+
 	remove_instance(instance)
 end
 
@@ -55,12 +55,12 @@ end
 function M.until_message(fn, timeout)
 	local instance = create_instance()
 	instance.message = true
-	
+
 	local timestamp = socket.gettime()
 	local message_id, message, sender
 	while not fn(message_id, message, sender) do
 		message_id, message, sender = coroutine.yield()
-		if timeout and (timestamp + timeout) >= socket.gettime() then
+		if timeout and socket.gettime() >= (timestamp + timeout) then
 			break
 		end
 	end
