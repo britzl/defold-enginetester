@@ -4,7 +4,7 @@ embedded_instances {
   id: "tester"
   data: "components {\n"
   "  id: \"steps\"\n"
-  "  component: \"/tester/features/step_definitions/steps.script\"\n"
+  "  component: \"/tester/steps/steps.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
