@@ -1,4 +1,4 @@
-name: "factory"
+name: "bunnymark"
 instances {
   id: "automation"
   prototype: "/cucumber/automation/automation.go"
@@ -23,9 +23,9 @@ scale_along_z: 0
 embedded_instances {
   id: "go"
   data: "embedded_components {\n"
-  "  id: \"factory1\"\n"
+  "  id: \"bunnyfactory\"\n"
   "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/tester/tests/factory/factory_go.go\\\"\\n"
+  "  data: \"prototype: \\\"/tester/tests/bunnymark/bunny.go\\\"\\n"
   "load_dynamically: false\\n"
   "\"\n"
   "  position {\n"

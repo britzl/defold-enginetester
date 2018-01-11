@@ -1,5 +1,5 @@
 [project]
-title = Defold Engine Tester
+title = DefoldEngineTester
 dependencies = https://github.com/britzl/cucumber-defold/archive/master.zip
 
 [bootstrap]
@@ -11,6 +11,7 @@ game_binding = /input/game.input_bindingc
 [display]
 width = 640
 height = 1136
+variable_dt = 1
 
 [script]
 shared_state = 1
@@ -25,10 +26,10 @@ bundle_identifier = com.defold.enginetester
 package = com.defold.enginetester
 
 [collection]
-max_instances = 5000
+max_instances = 15000
 
 [sprite]
-max_count = 10000
+max_count = 15000
 
 [spine]
 max_count = 1000
@@ -44,4 +45,3 @@ max_count = 150
 
 [label]
 max_count = 150
-
