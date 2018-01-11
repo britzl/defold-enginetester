@@ -44,6 +44,9 @@ local metrics = {
 }
 
 
+--- Create a frame interval function
+-- @param interval Frame interval, 0=every frame, 1=every second frame
+-- @return Interval function
 function M.frame_interval(interval)
 	local c = interval
 	return function()
@@ -56,6 +59,9 @@ function M.frame_interval(interval)
 	end
 end
 
+--- Create a time interval function
+-- @param interval Time in seconds between when samples should be collected
+-- @return Interval function
 function M.time_interval(interval)
 	local t = socket.gettime() + interval
 	return function()
@@ -69,12 +75,17 @@ function M.time_interval(interval)
 end
 
 
+--- Stop collecting metrics
 function M.stop()
 	for metric,data in pairs(metrics) do
 		data.enabled = false
 	end
 end
 
+--- Collect samples for a specific metric
+-- @param metric
+-- @param interval A function that should return true whenever it is time to collect
+-- data for the metric. Create using either Mtime_interval(interval) or M.frame_interval(interval)
 function M.collect(metric, interval)
 	assert(metrics[metric], ("Unknown metric %s"):format(metric))
 	assert(interval and type(interval) == "function", "Interval must be a function")
@@ -82,6 +93,18 @@ function M.collect(metric, interval)
 	metrics[metric].samples = {}
 	metrics[metric].current_sample = { 0 }
 	metrics[metric].enabled = true
+end
+
+--- Get list of enabled metrics
+-- @return Enabled metrics
+function M.enabled_metrics()
+	local enabled = {}
+	for metric,data in pairs(metrics) do
+		if data.enabled then
+			enabled[#enabled + 1] = metric
+		end
+	end
+	return enabled
 end
 
 -- call once per frame
@@ -104,17 +127,25 @@ local function copy(t)
 end
 
 
+--- Get all samples collected for a metric
+-- @param metric
+-- @return Collected samples (copy)
 function M.samples(metric)
 	assert(metrics[metric], ("Unknown metric %s"):format(metric))
 	return copy(metrics[metric].samples)
 end
 
-
+--- Count the number of collected samples for a metric
+-- @param metric
+-- @return Number of collected samples
 function M.sample_count(metric)
 	assert(metrics[metric], ("Unknown metric %s"):format(metric))
 	return #metrics[metric].samples
 end
 
+--- Sum up the total value of all collected sample for a metric
+-- @param metric
+-- @return Sum of collected samples when added
 function M.total(metric)
 	assert(metrics[metric], ("Unknown metric %s"):format(metric))
 	local samples = M.samples(metric)
@@ -125,6 +156,9 @@ function M.total(metric)
 	return total
 end
 
+--- Average value of all collected samples for a metric
+-- @param metric
+-- @return Average of collected samples
 function M.average(metric)
 	assert(metrics[metric], ("Unknown metric %s"):format(metric))
 	local sample_count = M.sample_count(metric)
@@ -135,6 +169,9 @@ function M.average(metric)
 end
 
 
+--- Median value of all collected samples for a metric
+-- @param metric
+-- @return Median of collected samples
 function M.median(metric)
 	assert(metrics[metric], ("Unknown metric %s"):format(metric))
 	local samples = M.samples(metric)
