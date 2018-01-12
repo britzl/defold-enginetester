@@ -8,5 +8,5 @@ Feature: Bunnymark test
 	Scenario: Spawn and bounce using go.animate()
 		Given frame time metrics is collected every frame
 		And metrics is sent to the influx instance at http://metrics.defold.com:8086/write?db=engine_metrics with prefix bunnymark
-		When I run a bunnymark test with 5000 instances using factory bunnymark:/go#bunnyfactory for 100 frames
+		When I run a bunnymark test with 5000 instances using factory bunnymark:/go#bunnyfactory for 1000 frames
 		Then aggregated frame time should be less than 17 seconds

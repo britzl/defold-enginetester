@@ -29,6 +29,7 @@ local function send_measurement(url, name, tags, field_key, field_value)
 		pprint(response)
 	end
 	url = url .. "&precision=ms"
+	print("Sending metrics", url, post_data)
 	http.request(url, "POST", response_handler, {}, post_data)
 end
 
