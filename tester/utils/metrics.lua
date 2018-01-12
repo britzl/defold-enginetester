@@ -107,6 +107,22 @@ function M.enabled_metrics()
 	return enabled
 end
 
+--- Check if a metric is enabled or not
+-- @param metric
+-- @return true if the metric is enabled
+function M.is_enabled(metric)
+	assert(metrics[metric], ("Unknown metric %s"):format(metric))
+	return metrics[metric].enabled
+end
+
+--- Check if a metric has collected any samples
+-- @param metric
+-- @return true if samples has been collected
+function M.has_samples(metric)
+	assert(metrics[metric], ("Unknown metric %s"):format(metric))
+	return #metrics[metric].samples
+end
+
 -- call once per frame
 -- if called more often the FPS metrics will be wrong
 function M.update(dt)
