@@ -34,7 +34,9 @@ local function send_measurement(url, name, tags, field_key, field_value)
 end
 
 function M.send_metrics(url, prefix)
+	print("send_metrics", url, prefix)
 	if metrics.has_samples(metrics.FRAMETIME) then
+		print("send_metrics has FRAMETIME metrics")
 		local frametime = metrics.average(metrics.FRAMETIME)
 		local engine_info = sys.get_engine_info()
 		local sys_info = sys.get_sys_info()
