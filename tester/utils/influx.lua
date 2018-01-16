@@ -2,6 +2,16 @@ local metrics = require "tester.utils.metrics"
 
 local M = {}
 
+local function url_encode(str)
+	if (str) then
+		str = string.gsub (str, "\n", "\r\n")
+		str = string.gsub (str, "([^%w %-%_%.%~])",
+		function (c) return string.format ("%%%02X", string.byte(c)) end)
+			str = string.gsub (str, " ", "+")
+		end
+	return str
+end
+
 
 local function send_measurement(url, name, tags, field_key, field_value)
 	assert(url, "You must provide a URL")
@@ -30,22 +40,20 @@ local function send_measurement(url, name, tags, field_key, field_value)
 	end
 	url = url .. "&precision=ms"
 	print("Sending metrics", url, post_data)
-	http.request(url, "POST", response_handler, {}, post_data)
+	http.request(url, "POST", response_handler, headers, post_data)
 end
 
 function M.send_metrics(url, prefix)
-	print("send_metrics", url, prefix)
 	if metrics.has_samples(metrics.FRAMETIME) then
-		print("send_metrics has FRAMETIME metrics")
 		local frametime = metrics.average(metrics.FRAMETIME)
 		local engine_info = sys.get_engine_info()
 		local sys_info = sys.get_sys_info()
 
 		local tags = { sha1 = engine_info.version_sha1 }
 		if sys_info.device_model and sys_info.device_model ~= "" then
-			tags.device_model = sys_info.device_model
+			tags.device_model = url_encode(sys_info.device_model)
 		else
-			tags.device_model = sys_info.system_name .. sys_info.system_version
+			tags.device_model = url_encode(sys_info.system_name .. sys_info.system_version)
 		end
 
 		send_measurement(url, prefix .. "_frametime", tags, "average_frametime", frametime)
