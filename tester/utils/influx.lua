@@ -30,7 +30,7 @@ local function timestamp_from_sha1(sha1)
 end
 
 local function escape_tag(tag)
-	return tag:sub(" ", "\\ "):sub(",", "\\,")
+	return tag:gsub(" ", "\\ "):gsub(",", "\\,")
 end
 
 local function url_encode(str)
