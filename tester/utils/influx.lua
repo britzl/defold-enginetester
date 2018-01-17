@@ -29,6 +29,10 @@ local function timestamp_from_sha1(sha1)
 	return VERSION_TO_TS[sha1] and VERSION_TO_TS[sha1].ts
 end
 
+local function escape_tag(tag)
+	return tag:sub(" ", "\\ "):sub(",", "\\,")
+end
+
 local function url_encode(str)
 	if (str) then
 		str = string.gsub (str, "\n", "\r\n")
@@ -76,12 +80,17 @@ function M.send_metrics(url, prefix)
 		local engine_info = sys.get_engine_info()
 		local sys_info = sys.get_sys_info()
 
-		local tags = { sha1 = engine_info.version_sha1 }
+		local tags = {}
 		if sys_info.device_model and sys_info.device_model ~= "" then
-			tags.device_model = url_encode(sys_info.device_model)
-		else
-			tags.device_model = url_encode(sys_info.system_name .. sys_info.system_version)
+			tags.device_model = escape_tag(sys_info.device_model)
 		end
+		if sys_info.manufacturer and sys_info.manufacturer ~= "" then
+			tags.manufacturer = escape_tag(sys_info.manufacturer)
+		end
+		tags.system_name = escape_tag(sys_info.system_name)
+		tags.system_version = escape_tag(sys_info.system_version)
+		tags.api_version = escape_tag(sys_info.api_version)
+		tags.sha1 = escape_tag(engine_info.version_sha1)
 
 		local timestamp = timestamp_from_sha1(engine_info.version_sha1)
 		send_measurement(url, prefix .. "_frametime", tags, "average_frametime", frametime, timestamp)
