@@ -1,0 +1,7 @@
+mesh: "/assets/model/chest_model.dae"
+material: "/assets/materials/model.material"
+textures: "/assets/images/phobos.png"
+skeleton: "/assets/model/chest_model.dae"
+animations: "/assets/model/chest_model.dae"
+default_animation: ""
+name: "unnamed"

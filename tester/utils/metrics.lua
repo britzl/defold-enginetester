@@ -159,7 +159,7 @@ function M.sample_count(metric)
 	return #metrics[metric].samples
 end
 
---- Sum up the total value of all collected sample for a metric
+--- Get the sum up the total value of all collected sample for a metric
 -- @param metric
 -- @return Sum of collected samples when added
 function M.total(metric)
@@ -172,7 +172,7 @@ function M.total(metric)
 	return total
 end
 
---- Average value of all collected samples for a metric
+--- Get the average value of all collected samples for a metric
 -- @param metric
 -- @return Average of collected samples
 function M.average(metric)
@@ -184,8 +184,33 @@ function M.average(metric)
 	return M.total(metric) / sample_count
 end
 
+--- Get the minimum value of all collected samples for a metric
+-- @param metric
+-- @return Minimum value
+function M.minimum(metric)
+	assert(metrics[metric], ("Unknown metric %s"):format(metric))
+	local samples = M.samples(metric)
+	local min = samples[1]
+	for _,sample in ipairs(samples) do
+		min = math.min(min, sample)
+	end
+	return min
+end
 
---- Median value of all collected samples for a metric
+--- Get the maximum value of all collected samples for a metric
+-- @param metric
+-- @return Maximum value
+function M.maximum(metric)
+	assert(metrics[metric], ("Unknown metric %s"):format(metric))
+	local samples = M.samples(metric)
+	local max = samples[1]
+	for _,sample in ipairs(samples) do
+		max = math.max(max, sample)
+	end
+	return max
+end
+
+--- Get the median value of all collected samples for a metric
 -- @param metric
 -- @return Median of collected samples
 function M.median(metric)
