@@ -5,6 +5,7 @@ Feature: Bunnymark test
 
 	@bunnymark
 	@sprite
+	@grafana
 	Scenario: Spawn and bounce using go.animate()
 		Given frame time metrics is collected every frame
 		And metrics is sent to the influx instance at http://metrics.defold.com:8086/write?db=engine_metrics with prefix bunnymark_5000
@@ -13,6 +14,7 @@ Feature: Bunnymark test
 
 	@bunnymark
 	@sprite
+	@grafana
 	Scenario: Spawn and bounce using go.animate()
 		Given frame time metrics is collected every frame
 		And metrics is sent to the influx instance at http://metrics.defold.com:8086/write?db=engine_metrics with prefix bunnymark_500

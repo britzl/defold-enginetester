@@ -4,6 +4,7 @@ Feature: Model test
 		Given the tests:/proxies#model collection is loaded
 
 	@model
+	@grafana
 	Scenario: Spawn and animate static models
 		Given frame time metrics is collected every frame
 		And metrics is sent to the influx instance at http://metrics.defold.com:8086/write?db=engine_metrics with prefix staticmodel_500
@@ -11,6 +12,7 @@ Feature: Model test
 		Then average frame time should be less than 0.017 seconds
 
 	@model
+	@grafana
 	Scenario: Spawn and animate skinned models
 		Given frame time metrics is collected every frame
 		And metrics is sent to the influx instance at http://metrics.defold.com:8086/write?db=engine_metrics with prefix skinnedmodel_500
