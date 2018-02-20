@@ -4,7 +4,7 @@ dependencies = https://github.com/britzl/cucumber-defold/archive/master.zip
 
 [bootstrap]
 main_collection = /tester/tester.collectionc
-render = /render/custom.renderc
+render = /builtins/render/default.renderc
 
 [input]
 game_binding = /input/game.input_bindingc
