@@ -1,0 +1,7 @@
+function init(self)
+	msg.post("@render:", "enable3d")
+end
+
+function final(self)
+	msg.post("@render:", "disable3d")
+end
