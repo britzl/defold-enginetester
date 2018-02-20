@@ -15,7 +15,7 @@ After(function()
 	end
 end)
 
-Given("metrics is sent to the influx instance at (.*) with prefix (.*)", function(url, prefix)
+Given("metrics are sent to the influx instance at (.*) with prefix (.*)", function(url, prefix)
 	settings.url = url
 	settings.prefix = prefix
 	settings.enabled = true

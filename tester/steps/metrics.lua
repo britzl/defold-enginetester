@@ -23,23 +23,23 @@ After(function()
 	metrics.stop()
 end)
 
-Given("fps metrics is collected with a (%d*) second interval", function(interval)
+Given("fps metrics are collected with a (%d*) second interval", function(interval)
 	metrics.collect(metrics.FPS, metrics.time_interval(tonumber(interval)))
 end)
 
-Given("frame time metrics is collected with a (%d*) frame interval", function(interval)
+Given("frame time metrics are collected with a (%d*) frame interval", function(interval)
 	metrics.collect(metrics.FRAMETIME, metrics.frame_interval(tonumber(interval)))
 end)
 
-Given("frame time metrics is collected every frame", function()
+Given("frame time metrics are collected every frame", function()
 	metrics.collect(metrics.FRAMETIME, metrics.frame_interval(0))
 end)
 
-Given("cpu metrics is collected with a (%d*) second interval", function(interval)
+Given("cpu metrics are collected with a (%d*) second interval", function(interval)
 	metrics.collect(metrics.CPU, metrics.time_interval(tonumber(interval)))
 end)
 
-Given("mem metrics is collected with a (%d*) second interval", function(interval)
+Given("mem metrics are collected with a (%d*) second interval", function(interval)
 	metrics.collect(metrics.MEM, metrics.time_interval(tonumber(interval)))
 end)
 
