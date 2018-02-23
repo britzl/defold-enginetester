@@ -4,7 +4,7 @@ dependencies = https://github.com/britzl/cucumber-defold/archive/master.zip
 
 [bootstrap]
 main_collection = /tester/tester.collectionc
-render = /builtins/render/default.renderc
+render = /render/custom.renderc
 
 [input]
 game_binding = /input/game.input_bindingc
@@ -36,7 +36,7 @@ max_count = 15000
 max_count = 1000
 
 [rig]
-max_instance_count = 1000
+max_instance_count = 5000
 
 [particle_fx]
 max_count = 200
