@@ -36,7 +36,7 @@ max_count = 15000
 max_count = 1000
 
 [rig]
-max_instance_count = 5000
+max_instance_count = 1000
 
 [particle_fx]
 max_count = 200
