@@ -48,5 +48,6 @@ When("I run a bunnymark test with (%d*) instances using factory (.*) for (.*) fr
 	wait.until_true(function(dt)
 		frames = frames - 1
 		return frames == 0
-	end)
+	end, (frames * 10 / 60))
+	assert(frames == 0)
 end)

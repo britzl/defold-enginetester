@@ -1,5 +1,6 @@
 require "cucumber.cucumber"
 local influx = require "tester.utils.influx"
+local wait = require "cucumber.automation.wait"
 
 local settings = {}
 
@@ -11,7 +12,9 @@ end)
 
 After(function()
 	if settings.enabled then
-		influx.send_metrics(settings.url, settings.prefix)
+		wait.until_callback(function(cb)
+			influx.send_metrics(settings.url, settings.prefix, cb)
+		end)
 	end
 end)
 

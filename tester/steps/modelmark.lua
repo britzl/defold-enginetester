@@ -33,5 +33,6 @@ When("I run a modelmark test with (%d*) instances with scale (.*) using factory 
 	wait.until_true(function(dt)
 		frames = frames - 1
 		return frames == 0
-	end)
+	end, (frames * 10 / 60))
+	assert(frames == 0)
 end)

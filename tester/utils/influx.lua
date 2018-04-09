@@ -72,39 +72,48 @@ local function send_measurement(url, name, tags, field_key, field_value, timesta
 
 	local post_data = ("%s %s=%s %s"):format(tagged_name, field_key, tostring(field_value), tostring(timestamp))
 	local headers = {}
-	local function response_handler(self, id, response)
+	url = url .. "&precision=ms"
+	local co = coroutine.running()
+	assert(co)
+	print("Sending metrics", url, post_data)
+	http.request(url, "POST", function(self, id, response)
 		print("Response")
 		pprint(response)
-	end
-	url = url .. "&precision=ms"
-	print("Sending metrics", url, post_data)
-	http.request(url, "POST", response_handler, headers, post_data)
+		coroutine.resume(co)
+	end, headers, post_data)
+	print("Yielding")
+	coroutine.yield()
 end
 
-function M.send_metrics(url, prefix)
-	local engine_info = sys.get_engine_info()
-	local sys_info = sys.get_sys_info()
-	local tags = {}
-	if sys_info.device_model and sys_info.device_model ~= "" then
-		tags.device_model = validate_tag(escape_tag(sys_info.device_model))
-	end
-	if sys_info.manufacturer and sys_info.manufacturer ~= "" then
-		tags.manufacturer = validate_tag(escape_tag(sys_info.manufacturer))
-	end
-	tags.system_name = validate_tag(escape_tag(sys_info.system_name))
-	tags.system_version = validate_tag(escape_tag(sys_info.system_version))
-	tags.api_version = validate_tag(escape_tag(sys_info.api_version))
-	tags.engine_sha1 = validate_tag(escape_tag(engine_info.version_sha1))
-	tags.engine_version = validate_tag(escape_tag(engine_info.version))
+function M.send_metrics(url, prefix, cb)
+	print("send metrics")
+	coroutine.wrap(function()
+		print("sending metrics")
+		local engine_info = sys.get_engine_info()
+		local sys_info = sys.get_sys_info()
+		local tags = {}
+		if sys_info.device_model and sys_info.device_model ~= "" then
+			tags.device_model = validate_tag(escape_tag(sys_info.device_model))
+		end
+		if sys_info.manufacturer and sys_info.manufacturer ~= "" then
+			tags.manufacturer = validate_tag(escape_tag(sys_info.manufacturer))
+		end
+		tags.system_name = validate_tag(escape_tag(sys_info.system_name))
+		tags.system_version = validate_tag(escape_tag(sys_info.system_version))
+		tags.api_version = validate_tag(escape_tag(sys_info.api_version))
+		tags.engine_sha1 = validate_tag(escape_tag(engine_info.version_sha1))
+		tags.engine_version = validate_tag(escape_tag(engine_info.version))
 
-	local timestamp = timestamp_from_sha1(engine_info.version_sha1)
-	if metrics.has_samples(metrics.FRAMETIME) then
-		local average_frametime = metrics.average(metrics.FRAMETIME)
-		send_measurement(url, prefix .. "_frametime", tags, "average_frametime", average_frametime, timestamp)
+		local timestamp = timestamp_from_sha1(engine_info.version_sha1)
+		if metrics.has_samples(metrics.FRAMETIME) then
+			local average_frametime = metrics.average(metrics.FRAMETIME)
+			send_measurement(url, prefix .. "_frametime", tags, "average_frametime", average_frametime, timestamp)
 
-		local minimum_frametime = metrics.minimum(metrics.FRAMETIME)
-		send_measurement(url, prefix .. "_frametime", tags, "minimum_frametime", minimum_frametime, timestamp)
-	end
+			local minimum_frametime = metrics.minimum(metrics.FRAMETIME)
+			send_measurement(url, prefix .. "_frametime", tags, "minimum_frametime", minimum_frametime, timestamp)
+		end
+		cb()
+	end)()
 end
 
 
