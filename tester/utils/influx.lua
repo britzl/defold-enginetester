@@ -79,10 +79,10 @@ local function send_measurement(url, name, tags, field_key, field_value, timesta
 	http.request(url, "POST", function(self, id, response)
 		print("Response")
 		pprint(response)
-		--coroutine.resume(co)
+		coroutine.resume(co)
 	end, headers, post_data)
 	print("Yielding")
-	--coroutine.yield()
+	coroutine.yield()
 end
 
 function M.send_metrics(url, prefix, cb)
