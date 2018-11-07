@@ -26,6 +26,7 @@ embedded_instances {
   "  id: \"factory1\"\n"
   "  type: \"factory\"\n"
   "  data: \"prototype: \\\"/tester/tests/factory/factory_go.go\\\"\\n"
+  "load_dynamically: false\\n"
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"

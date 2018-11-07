@@ -96,6 +96,7 @@ embedded_instances {
   "  id: \"model\"\n"
   "  type: \"collectionproxy\"\n"
   "  data: \"collection: \\\"/tester/tests/model/model.collection\\\"\\n"
+  "exclude: false\\n"
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"

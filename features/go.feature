@@ -153,6 +153,7 @@ Feature: go
 	Scenario: World rotation
 		When I set game object go:/go1 rotation to 10,20,0 degrees
 		And I set game object go:/child1 rotation to 20,30,40 degrees
+		And I wait 1 second
 		Then game object go:/go1 should be world rotated 10,20,0 degrees
 		And game object go:/child1 should be world rotated 30,50,40 degrees
 

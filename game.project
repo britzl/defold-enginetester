@@ -1,6 +1,6 @@
 [project]
 title = DefoldEngineTester
-dependencies = https://github.com/britzl/cucumber-defold/archive/1.0.0.zip
+dependencies = https://github.com/britzl/cucumber-defold/archive/1.0.1.zip
 
 [bootstrap]
 main_collection = /tester/tester.collectionc
