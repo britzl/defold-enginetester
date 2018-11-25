@@ -28,33 +28,39 @@ end)
 
 Then("crash backtrace should exist", function()
 	local backtrace = crash.get_backtrace(previous_dump_handle)
+	pprint(backtrace)
 	assert(backtrace and #backtrace > 0, "Expected backtrace to exist")
 end)
 
 Then("crash backtrace should contain at least (.*) entries", function(min_entries)
 	local backtrace = crash.get_backtrace(previous_dump_handle)
+	pprint(backtrace)
 	assert(backtrace, "Expected backtrace to exist")
 	assert(#backtrace >= tonumber(min_entries), ("Expected backtrace to contain at least %s entries"):format(min_entries))
 end)
 
 Then("crash extra data should exist", function()
 	local extra_data = crash.get_extra_data(previous_dump_handle)
+	pprint(extra_data)
 	assert(extra_data and #extra_data > 0, "Expected extra data to exist")
 end)
 
 Then("crash extra data should contain (.*)", function(data)
 	local extra_data = crash.get_extra_data(previous_dump_handle)
+	pprint(extra_data)
 	assert(extra_data and #extra_data > 0, "Expected extra data to exist")
 	assert(extra_data:find(data), ("Expected extra data to contain %s"):format(data))
 end)
 
 Then("crash modules should exist", function()
 	local modules = crash.get_modules(previous_dump_handle)
+	pprint(modules)
 	assert(modules and #modules > 0, "Expected modules to exist")
 end)
 
 Then("crash modules should contain (.*)", function(name)
 	local modules = crash.get_modules(previous_dump_handle)
+	pprint(modules)
 	assert(modules and #modules > 0, "Expected modules to exist")
 	local found = false
 	for _,module in ipairs(modules) do
