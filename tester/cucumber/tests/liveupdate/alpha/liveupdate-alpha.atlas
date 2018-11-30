@@ -1,0 +1,6 @@
+images {
+  image: "/tester/cucumber/tests/liveupdate/images/blackCat_pose_01.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

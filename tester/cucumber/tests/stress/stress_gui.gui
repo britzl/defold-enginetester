@@ -1,4 +1,4 @@
-script: "/tester/tests/stress/stress_gui.gui_script"
+script: "/tester/cucumber/tests/stress/stress_gui.gui_script"
 fonts {
   name: "roboto"
   font: "/assets/fonts/roboto.font"

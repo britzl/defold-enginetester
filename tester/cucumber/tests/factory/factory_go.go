@@ -1,6 +1,6 @@
 components {
   id: "script"
-  component: "/tester/tests/go/go1.script"
+  component: "/tester/cucumber/tests/go/go1.script"
   position {
     x: 0.0
     y: 0.0

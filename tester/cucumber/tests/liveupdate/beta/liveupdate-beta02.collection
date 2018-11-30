@@ -5,7 +5,7 @@ embedded_instances {
   data: "embedded_components {\n"
   "  id: \"sprite\"\n"
   "  type: \"sprite\"\n"
-  "  data: \"tile_set: \\\"/tester/tests/liveupdate/beta/liveupdate-beta.atlas\\\"\\n"
+  "  data: \"tile_set: \\\"/tester/cucumber/tests/liveupdate/beta/liveupdate-beta.atlas\\\"\\n"
   "default_animation: \\\"panda_bamboo_front 2\\\"\\n"
   "material: \\\"/builtins/materials/sprite.material\\\"\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"

@@ -1,6 +1,0 @@
-images {
-  image: "/tester/tests/liveupdate/images/panda_bamboo_front 2.png"
-}
-margin: 0
-extrude_borders: 0
-inner_padding: 0

@@ -1,6 +1,6 @@
 components {
-  id: "gui"
-  component: "/tester/tests/stress/stress_gui.gui"
+  id: "particlefx"
+  component: "/tester/cucumber/tests/stress/stress.particlefx"
   position {
     x: 0.0
     y: 0.0

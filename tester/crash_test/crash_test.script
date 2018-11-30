@@ -1,0 +1,102 @@
+local USER_FIELDS = {}
+
+for i=0,31 do
+	USER_FIELDS[i] = "S" .. string.char(65 + i):rep(253) .. "E"
+end
+
+local function check_user_fields(handle)
+	for i=0,#USER_FIELDS-1 do
+		local expected = USER_FIELDS[i]
+		local actual = crash.get_user_field(handle, i)
+		assert(actual == expected, ("Expected user field %d to be %s but it was %s"):format(i, expected, actual))
+	end
+end
+
+local function check_sys_fields(handle)
+	local function check_field(name, expected, actual)
+		assert(expected == actual, ("Expected %s to be set to %s but it was %s"):format(name, expected, actual))
+	end
+
+	local android_build_fingerprint = crash.get_sys_field(handle, crash.SYSFIELD_ANDROID_BUILD_FINGERPRINT)
+	local device_language = crash.get_sys_field(handle, crash.SYSFIELD_DEVICE_LANGUAGE)
+	local manufacturer = crash.get_sys_field(handle, crash.SYSFIELD_MANUFACTURER)
+	local device_model = crash.get_sys_field(handle, crash.SYSFIELD_DEVICE_MODEL)
+	local engine_hash = crash.get_sys_field(handle, crash.SYSFIELD_ENGINE_HASH)
+	local engine_version = crash.get_sys_field(handle, crash.SYSFIELD_ENGINE_VERSION)
+	local language = crash.get_sys_field(handle, crash.SYSFIELD_LANGUAGE)
+	local system_name = crash.get_sys_field(handle, crash.SYSFIELD_SYSTEM_NAME)
+	local system_version = crash.get_sys_field(handle, crash.SYSFIELD_SYSTEM_VERSION)
+	local territory = crash.get_sys_field(handle, crash.SYSFIELD_TERRITORY)
+
+	local sys_info = sys.get_sys_info()
+	local engine_info = sys.get_engine_info()
+	check_field("device_language", sys_info.device_language, device_language)
+	check_field("manufacturer", sys_info.manufacturer, manufacturer)
+	check_field("device_model", sys_info.device_model, device_model)
+	check_field("engine_hash", engine_info.version_sha1, engine_hash)
+	check_field("engine_version", engine_info.version, engine_version)
+	check_field("language", sys_info.language, language)
+	check_field("system_name", sys_info.system_name, system_name)
+	check_field("system_version", sys_info.system_version, system_version)
+	check_field("territory", sys_info.territory, territory)
+end
+
+local function check_modules(handle)
+	local modules = crash.get_modules(handle)
+	pprint(modules)
+	assert(modules and #modules > 0, "Expected modules to exist")
+end
+
+local function check_extra_data(handle)
+	local extra_data = crash.get_extra_data(handle)
+	pprint(extra_data)
+	assert(extra_data and #extra_data > 0, "Expected extra data to exist")
+end
+
+
+local function check_backtrace(handle)
+	local backtrace = crash.get_backtrace(handle)
+	pprint(backtrace)
+	assert(backtrace and #backtrace > 0, "Expected backtrace to exist")
+end
+
+local function check_signum(handle)
+	local signum = crash.get_signum(handle)
+	assert(signum, "Expected signum to exist")
+end
+
+local function validate_crash(handle)
+	check_sys_fields(handle)
+	check_user_fields(handle)
+	check_modules(handle)
+	check_extra_data(handle)
+	check_backtrace(handle)
+	check_signum(handle)
+end
+
+
+function init(self)
+	print("Loading previous crash")
+	local handle = crash.load_previous()
+	if not handle then
+		print("No previous crash to load - crashing the app now!")
+		for i=0,#USER_FIELDS-1 do
+			local user_field = USER_FIELDS[i]
+			crash.set_user_field(i, user_field)
+		end
+		crash.write_dump()
+		os.exit()
+		return
+	end
+
+	print("Validating crash data")
+	local ok, err = pcall(validate_crash, handle)
+	if not ok then
+		print(err)
+	end
+	print("Releasing crash")
+	crash.release(handle)
+
+	print("Exiting application")
+	os.exit(ok and 0 or 1)
+end

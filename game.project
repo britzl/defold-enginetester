@@ -3,7 +3,7 @@ title = DefoldEngineTester
 dependencies = https://github.com/britzl/cucumber-defold/archive/1.0.1.zip
 
 [bootstrap]
-main_collection = /tester/tester.collectionc
+main_collection = /tester/cucumber/cucumber.collectionc
 render = /render/custom.renderc
 
 [input]

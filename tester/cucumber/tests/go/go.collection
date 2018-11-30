@@ -25,7 +25,7 @@ embedded_instances {
   children: "child1"
   data: "components {\n"
   "  id: \"script\"\n"
-  "  component: \"/tester/tests/go/go1.script\"\n"
+  "  component: \"/tester/cucumber/tests/go/go1.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
