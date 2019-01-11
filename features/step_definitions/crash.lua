@@ -3,7 +3,7 @@ local wait = require "cucumber.automation.wait"
 
 local previous_dump_handle = nil
 
-Given("I have set user field (.*) to (.*)", function(index, value)
+Given("I have set crash user field (.*) to (.*)", function(index, value)
 	index = tonumber(index)
 	crash.set_user_field(index, value)
 end)

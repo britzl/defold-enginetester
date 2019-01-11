@@ -2,6 +2,8 @@ Feature: Crash test
 
 	@crash
 	Scenario: Crash and load dump
+		Given I have set crash user field 0 to foobar
+		When the app crashes
 		Then I should be able to load a crash dump
 		And crash signum should exist
 		And crash extra data should contain Crash_WriteDump
