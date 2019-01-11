@@ -68,7 +68,7 @@ Then("crash modules should contain (.*)", function(name)
 	assert(modules and #modules > 0, "Expected modules to exist")
 	local found = false
 	for _,module in ipairs(modules) do
-		if module.name == name then
+		if module.name:match(name) then
 			found = true
 			break
 		end
