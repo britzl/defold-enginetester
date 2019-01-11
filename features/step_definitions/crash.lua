@@ -54,13 +54,17 @@ end)
 
 Then("crash modules should exist", function()
 	local modules = crash.get_modules(previous_dump_handle)
-	pprint(modules)
+	for k,v in pairs(modules) do
+		print("module", k, v)
+	end
 	assert(modules and #modules > 0, "Expected modules to exist")
 end)
 
 Then("crash modules should contain (.*)", function(name)
 	local modules = crash.get_modules(previous_dump_handle)
-	pprint(modules)
+	for k,v in pairs(modules) do
+		print("module", k, v)
+	end
 	assert(modules and #modules > 0, "Expected modules to exist")
 	local found = false
 	for _,module in ipairs(modules) do
